@@ -89,8 +89,10 @@ void setupHandler() {
 }
 
 void loopHandler() {
-  /* The following TRIGGER/ECHO cycle is used to determine the
-  distance of the nearest object by bouncing soundwaves off of it. */
+  /*
+  The following TRIGGER/ECHO cycle is used to determine the
+  distance of the nearest object by bouncing soundwaves off of it.
+  */
 
   digitalWrite(TRIGGER, LOW);
   delayMicroseconds(2);
