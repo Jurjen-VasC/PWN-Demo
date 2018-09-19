@@ -16,6 +16,7 @@
 int valve = 0;
 int pump = 0;
 int level = 0;
+int previous_level = 0;
 
 float current_distance;
 float average_distance;
@@ -88,8 +89,10 @@ void setupHandler() {
 }
 
 void loopHandler() {
-  /* The following TRIGGER/ECHO cycle is used to determine the
-  distance of the nearest object by bouncing soundwaves off of it. */
+  /*
+  The following TRIGGER/ECHO cycle is used to determine the
+  distance of the nearest object by bouncing soundwaves off of it.
+  */
 
   digitalWrite(TRIGGER, LOW);
   delayMicroseconds(2);
@@ -116,12 +119,15 @@ void loopHandler() {
 
   // Calculate the level in % based on the distance to the watersurface
   level = 100 - ((average_distance - min_distance) / (max_distance - min_distance) * 100);
-  levelNode.setProperty("level").send(String(level));
-
+  if (level != previous_level) {
+    // Only publish if the level has changed.
+    levelNode.setProperty("level").send(String(level));
+    previous_level = level;
+  }
   if (level < 10) { // Tank running empty
     valveNode.setProperty("state/set").send("off");
     pumpNode.setProperty("state/set").send("off");
-    }
+  }
 
   // Delay between measurements.
   delay(1000);
