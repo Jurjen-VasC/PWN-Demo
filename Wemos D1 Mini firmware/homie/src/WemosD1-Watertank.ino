@@ -10,7 +10,9 @@
 #define RELAY_PUMP D2
 
 #define min_distance 10
-#define max_distance 150
+#define max_distance 150  // Lowest level
+
+#define min_level 10      // Minimum percentage that should remain in tank
 
 // Need to maintain status somewhere
 int valve = 0;
@@ -39,17 +41,19 @@ bool valveHandler(HomieRange range, String value) {
   Homie.getLogger() << "valveHandler: " << value << endl;
   if (value != "on" && value != "off") return false;
 
-  if (value == "on") {
+  if (value == "on" and valve == 0 and level > min_level) {
+    // Only open valve is there is enough water in tank.
     digitalWrite(RELAY_VALVE, HIGH);
     valve = 1;
-    valveNode.setProperty("state").send(value);
+    valveNode.setProperty("state").send("on");
   } else {
     digitalWrite(RELAY_VALVE, LOW);
     valve = 0;
     if (pump == 1) {
       pumpNode.setProperty("state/set").send("off");
     }
-    valveNode.setProperty("state").send(value);
+    valveNode.setProperty("state").send("off");
+    //valveNode.setProperty("state/set").send("off");
   }
 
   return true;
@@ -65,16 +69,16 @@ bool pumpHandler(HomieRange range, String value) {
   Homie.getLogger() << "pumpHandler: " << value << endl;
   if (value != "on" && value != "off") return false;
 
-  if (value == "on") {
-    if (valve == 1) { // Only turn on pump if valve is open
-      digitalWrite(RELAY_PUMP, HIGH);
-      pump = 1;
-      pumpNode.setProperty("state").send(value);
-    }
+  if (value == "on" and pump == 0 and valve == 1) {
+    // Only turn on pump if valve is open
+    digitalWrite(RELAY_PUMP, HIGH);
+    pump = 1;
+    pumpNode.setProperty("state").send("on");
   } else {
     digitalWrite(RELAY_PUMP, LOW);
     pump = 0;
-    pumpNode.setProperty("state").send(value);
+    pumpNode.setProperty("state").send("off");
+    //pumpNode.setProperty("state/set").send("off");
   }
 
 
@@ -124,7 +128,7 @@ void loopHandler() {
     levelNode.setProperty("level").send(String(level));
     previous_level = level;
   }
-  if (level < 10) { // Tank running empty
+  if (level <= min_level) { // Tank running empty
     valveNode.setProperty("state/set").send("off");
     pumpNode.setProperty("state/set").send("off");
   }
