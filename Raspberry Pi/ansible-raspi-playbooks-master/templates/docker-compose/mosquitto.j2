@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mosquitto:
+    image: panuwitp/mosquitto-arm
+
+    container_name: mosquitto
+    hostname: mosquitto.local
+
+    ports:
+     - "1883:1883"
+     - "8883:8883"
+     - "9001:9001"
+
+    volumes:
+     - config:/mosquitto/config/
+     - logs:/mosquitto/log/
+     - data:/mosquitto/data/
+     - /etc/localtime:/etc/localtime:ro
+     - /etc/timezone:/etc/timezone:ro
+
+    restart: unless-stopped
+volumes:
+  config:
+  logs:
+  data:
+

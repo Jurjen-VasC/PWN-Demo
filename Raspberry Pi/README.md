@@ -9,6 +9,24 @@ The Raspberry Pi is a version 3 device. This is great because it allows us to ru
 First download and install the latest version of Raspbian on a SD card. 
 The next step is to install Docker.
 
+### Getting the default files from Github
+
+Development is done with version control from Github. Clone the project in the home folder of the user 'pi'.
+
+```
+cd
+git clone https://github.com/mverleun/PWN-Demo.git
+```
+
+### Install PlatformIO
+
+PlatformIO is used to build the firmware. Open a terminal session and type the following commands:
+
+```
+python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
+sudo mv ~/.local/bin/platformio /usr/local/bin
+```
+
 ### Install Docker
 Follow the steps as described here: [Install Docker](https://docs.docker.com/install/linux/docker-ce/debian/). Make sure to use the instruction for `armhf` where apropiate.
 

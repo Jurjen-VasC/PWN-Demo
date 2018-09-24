@@ -1,0 +1,3 @@
+---
+- name: Download docker-compose
+  shell: pip install docker-compose && sudo mv ~/.local/bin/docker-compose /usr/local/bin

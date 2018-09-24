@@ -1,0 +1,90 @@
+version: '2'
+services:
+  web:
+    image: raymondmm/grafana
+
+    container_name: grafana
+    hostname: grafana.local
+
+    ports:
+     - "3000:3000"
+
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - etc:/etc/grafana
+     - lib:/var/lib/grafana
+     - log:/var/log/grafana
+
+    links: 
+     - influxdb
+
+    restart: unless-stopped
+
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    hostname: influxdb.local
+
+    restart: unless-stopped
+    ports:
+     - "8083:8083"
+     - "8086:8086"
+
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - influxdb:/var/lib/influxdb
+
+    environment:
+     - "INFLUXDB_DATA_ENGINE=tsm1"
+ 
+  telegraf-json:
+    image: telegraf
+    container_name: telegraf-json
+    hostname: telegraf.local
+
+    restart: unless-stopped
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - /var/run/docker.sock:/var/run/docker.sock
+     - telegraf-json:/etc/telegraf
+
+    links:
+     - influxdb
+
+  telegraf-float:
+    image: telegraf
+    container_name: telegraf-float
+    hostname: telegraf.local
+
+    restart: unless-stopped
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - /var/run/docker.sock:/var/run/docker.sock
+     - telegraf-float:/etc/telegraf
+
+    links:
+     - influxdb
+
+  telegraf-sysstat:
+    image: telegraf
+    container_name: telegraf-sysstat
+    hostname: telegraf.local
+
+    restart: unless-stopped
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - /var/run/docker.sock:/var/run/docker.sock
+     - telegraf-sysstat:/etc/telegraf
+
+    links:
+     - influxdb
+  
+volumes:
+  etc:
+  lib:
+  log:
+  influxdb:
+  telegraf-json:
+  telegraf-float:
+  telegraf-sysstat:
+

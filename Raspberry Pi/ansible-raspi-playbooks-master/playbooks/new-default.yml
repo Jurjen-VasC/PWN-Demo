@@ -1,0 +1,74 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# semaphore / cli argument example for vars_prompt
+#   ex: ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_password'"] 
+---
+- hosts: defaultdevices
+  gather_facts: yes
+  vars:
+    wifi_country: "NL"
+    locale: "en_US.UTF-8"
+    keyboard: "pc104"
+    keyboard_layout: "us"
+    timezone: Europe/Amsterdam
+    locale_options:
+      # Disable Default (GB) Locale
+      - regexp: "^#?en_GB.UTF-8 UTF-8"
+        line: "# en_GB.UTF-8 UTF-8"
+      # Enable US Locale
+      - regexp: "^#?en_US.UTF-8 UTF-8"
+        line: "en_US.UTF-8 UTF-8"
+
+#  vars_prompt:
+#
+#    - name: hostname
+#      prompt: "please enter a hostname for your new device:"
+#      private: no
+#    - name: wifi_ssid
+#      prompt: "please enter the WiFi SSID for your new device:"
+#      private: no
+#    - name: wifi_password
+#      prompt: "please enter the WiFi password for your new device:"
+#      private: yes
+
+  tasks:
+    # Install grafana
+    - include_tasks: ../tasks/grafana-docker.yml
+
+
+    # Expand the filesystem
+    - include_tasks: ../tasks/expand-filesystem.yml
+      tags: setup
+
+    # Set Internationalization Options
+    - include_tasks: ../tasks/internationalization.yml
+      tags: setup
+
+#    # Set WiFi Options
+#    - include_tasks: ../tasks/wifi.yml
+#      tags: setup
+
+    # Run apt-get update and apt-get upgrade 
+    - include_tasks: ../tasks/update.yml
+      tags: update
+
+#    # Set the hostname
+#    - include_tasks: ../tasks/hostname.yml
+#      tags: setup
+
+    - include_tasks: ../tasks/tzdata.yml
+      tags: system
+
+    # Install Docker
+    - include_tasks: ../tasks/docker.yml
+      tags: docker
+
+    # Install docker-compose
+    - include_tasks: ../tasks/docker-compose.yml
+      tags: docker
+    
+    # Install Mosquitto container
+    - include_tasks: ../tasks/mosquitto-docker.yml
+
+    # Install Node RED  container
+    - include_tasks: ../tasks/mosquitto-docker.yml
+
