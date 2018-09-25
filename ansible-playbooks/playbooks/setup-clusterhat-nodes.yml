@@ -1,0 +1,37 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/clusterhatnodes.yml
+---
+- hosts: clusternodes
+  gather_facts: yes
+  vars:
+    locale: "en_US.UTF-8"
+    keyboard: "pc104"
+    keyboard_layout: "us"
+    timezone: America/Los_Angeles
+    locale_options:
+      # Disable Default (GB) Locale
+      - regexp: "^#?en_GB.UTF-8 UTF-8"
+        line: "# en_GB.UTF-8 UTF-8"
+      # Enable US Locale
+      - regexp: "^#?en_US.UTF-8 UTF-8"
+        line: "en_US.UTF-8 UTF-8"
+
+  tasks:
+
+    # Expand the filesystem
+    - include_tasks: ../tasks/expand-filesystem.yml
+      tags: setup
+
+    # Set Internationalization Options
+    - include_tasks: ./tasks/internationalization.yml
+      tags: setup
+
+    # Run apt-get update and apt-get upgrade 
+    - include_tasks: ./tasks/update.yml
+      tags: update
+
+    - include_tasks: ../tasks/tzdata.yml
+      tags: system
+
+    - include_tasks: ../tasks/reboot.yml
+      tags: system
+
