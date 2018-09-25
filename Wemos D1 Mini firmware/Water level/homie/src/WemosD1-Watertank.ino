@@ -10,7 +10,7 @@
 #define RELAY_PUMP D2
 
 #define min_distance 10
-#define max_distance 150  // Lowest level
+#define max_distance 55  // Lowest level
 
 #define min_level 10      // Minimum percentage that should remain in tank
 
