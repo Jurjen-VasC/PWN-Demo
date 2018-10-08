@@ -11,10 +11,10 @@ HomieNode pulseNode("flow", "liters");
 //HomieNode pulse1Node("pulse1", "interval");
 
 
-#define PULSE_PIN1 D3   // P1
+#define PULSE_PIN1 D2   // P1
 
 
-#define SAMPLE_MINUTES 1
+#define SAMPLE_MINUTES 0.1
 
 #define DEBOUNCE_MS 20 //debouncing for interrupts
 
@@ -76,13 +76,7 @@ bool broadcastHandler(const String& level, const String& value) {
 void loopHandler() {
   if (tickOccured == true and PulsesKept1 > 0) {
     Serial.print("Tick occured. Pulses kept so far: ");
-
-    if (PulsesKept1 > 0) {
-      pulseNode.setProperty("pulses").send(String(PulsesKept1));
-      pulseNode.setProperty("interval").send(String(PulsesPeriods));
-      PulsesKept1 = 0;
-      PulsesPeriods = 0;
-    }
+    
     String payload = "{";
     payload += "\"P1\":";
     payload += PulsesKept1;
@@ -95,6 +89,14 @@ void loopHandler() {
     payload += "}";
 
     Serial.println(payload);
+
+    if (PulsesKept1 > 0) {
+      pulseNode.setProperty("pulses").send(String(PulsesKept1));
+      pulseNode.setProperty("interval").send(String(PulsesPeriods));
+      PulsesKept1 = 0;
+      PulsesPeriods = 0;
+    }
+
   }
   tickOccured = false;
 }
