@@ -6,8 +6,8 @@
 
 #define TRIGGER D6
 #define ECHO D7
-#define RELAY_VALVE D1
-#define RELAY_PUMP D2
+#define RELAY_VALVE D2
+#define RELAY_PUMP D1
 
 #define min_distance 10
 #define max_distance 55  // Lowest level
@@ -43,11 +43,11 @@ bool valveHandler(HomieRange range, String value) {
 
   if (value == "on" and valve == 0 and level > min_level) {
     // Only open valve is there is enough water in tank.
-    digitalWrite(RELAY_VALVE, HIGH);
+    digitalWrite(RELAY_VALVE, LOW);
     valve = 1;
     valveNode.setProperty("state").send("on");
   } else {
-    digitalWrite(RELAY_VALVE, LOW);
+    digitalWrite(RELAY_VALVE, HIGH);
     valve = 0;
     if (pump == 1) {
       pumpNode.setProperty("state/set").send("off");
@@ -71,11 +71,11 @@ bool pumpHandler(HomieRange range, String value) {
 
   if (value == "on" and pump == 0 and valve == 1) {
     // Only turn on pump if valve is open
-    digitalWrite(RELAY_PUMP, HIGH);
+    digitalWrite(RELAY_PUMP, LOW);
     pump = 1;
     pumpNode.setProperty("state").send("on");
   } else {
-    digitalWrite(RELAY_PUMP, LOW);
+    digitalWrite(RELAY_PUMP, HIGH);
     pump = 0;
     pumpNode.setProperty("state").send("off");
     //pumpNode.setProperty("state/set").send("off");
