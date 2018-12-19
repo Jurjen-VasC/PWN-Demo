@@ -10,3 +10,4 @@ Wemos D1 Mini firmware/builds/wemos-d1-watertank.bin
 Wemos D1 Mini firmware/builds/wemos-d1-watertank.bin
 Wemos D1 Mini firmware/Waterflow meter/builds/wemos-d1-waterflow.bin
 Wemos D1 Mini firmware/Waterflow meter/homie/data/homie/config.json-3dmz.json
+*.orig
