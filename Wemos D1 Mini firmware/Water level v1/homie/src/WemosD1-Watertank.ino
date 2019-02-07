@@ -4,8 +4,8 @@
 */
 #include <Homie.h>
 
-#define TRIGGER D6
-#define ECHO D7
+#define TRIGGER D6 // wit
+#define ECHO D7 // oranje
 #define RELAY_VALVE D2
 #define RELAY_PUMP D1
 
@@ -90,6 +90,14 @@ void setupHandler() {
   // Set the GPIO pins correctly
   pinMode(TRIGGER, OUTPUT);
   pinMode(ECHO, INPUT);
+
+  digitalWrite(RELAY_PUMP, HIGH);
+  pump = 0;
+  pumpNode.setProperty("state").send("off");
+
+  digitalWrite(RELAY_VALVE, HIGH);
+  valve = 0;
+  valveNode.setProperty("state").send("off");
 }
 
 void loopHandler() {
