@@ -6,8 +6,8 @@ The Raspberry Pi is a version 3 device. This is great because it allows us to ru
 
 ## Setting up the Raspberry Pi
 
-First download and install the latest version of Raspbian on a SD card. 
-The next step is to install Docker.
+First download and install the latest version of Hasbian on a SD card.  Hasbian is a special version of Raspbian that includes Home Assistent.
+Install the 32 bit version which is the recommended version at this time.
 
 ### Getting the default files from Github
 
@@ -23,76 +23,40 @@ git clone https://github.com/mverleun/PWN-Demo.git
 PlatformIO is used to build the firmware. Open a terminal session and type the following commands:
 
 ```
-python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
-sudo mv ~/.local/bin/platformio /usr/local/bin
+sudo python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/develop/scripts/get-platformio.py)"
 ```
 
-### Install Docker
-Follow the steps as described here: [Install Docker](https://docs.docker.com/install/linux/docker-ce/debian/). Make sure to use the instruction for `armhf` where apropiate.
+### Install esphome.io
 
-### Install docker-compose
-`docker-compose` is a great command to make working with containers easier.
-
-Install it using `pip`. Enter the following command:
+[Esphome.io](https://esphome.io/) is the new name of firmware that's easy to use. It requires configuration but programming skills are not needed.
+Installing is done according to the information on the [Getting started](https://esphome.io/guides/getting_started_command_line.html) page, which says to enter the following command:
 
 ``` bash
-pip install docker-compose
-sudo mv ~/.local/bin/docker-compose /usr/local/bin
-```
-
-Create a directory `/docker` which will be used to manage the containers:
-
-``` bash
-sudo mkdir /docker
-sudo chown pi /docker
+sudo pip install esphomeyaml
 ```
 
 ### Install Mosquitto
 
-Inside the `/docker` directory create a subdirectory for the Mosquitto container.
+Let's install the version of Mosquitto that's bundled with Raspbian
 
 ``` bash
-cd /docker
-mkdir mosquitto
-cd mosquitto
+sudo apt update
+sudo apt install mosquitto
 ```
 
-Use your favorite editor to create a file named `docker-compose.yml` in this directory with the following content:
+This will automatically start the MQTT broker.
 
-``` 
-version: '3'
-services:
-  mosquitto:
-    image: panuwitp/mosquitto-arm
+Next step is to add the mqtt settings to the configuration of Home Assistent. Because we don't have the propper permission use `sudo nano /home/homeassistant/.homeassistant/configuration.yaml` to open the file in an editor.
 
-    container_name: mosquitto
-    hostname: mosquitto.local
+Add the following configuration snippet between the `tts:` and `cloud:` section:
 
-    ports:
-     - "1883:1883"
-     - "8883:8883"
-     - "9001:9001"
-
-    volumes:
-     - config:/mosquitto/config/
-     - logs:/mosquitto/log/
-     - data:/mosquitto/data/
-     - /etc/localtime:/etc/localtime:ro
-     - /etc/timezone:/etc/timezone:ro
-
-    restart: unless-stopped
-volumes:
-  config:
-  logs:
-  data:
 ```
- 
- Once you've completed this file start the container with the command:
- 
+# MQTT Config
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  client_id: homeassistent
+  discovery: true
+  discovery_prefix: homeassistant
 ```
-docker-compose up -d
-```
-
-This will start a container with settings from a default config file.
-If you want to change the config use your favorite editor to modify the contents of the following file:
-`/var/lib/docker/volumes/mosquitto_config/_data/mosquitto.conf`
+These settings will instruct Home Assistent to use the MQTT broker on the local system. Esphome firmware can use the topic `homeassistant/#` to announce devices which will then be auto-discovered.
