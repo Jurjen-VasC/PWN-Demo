@@ -1,0 +1,7 @@
+mqtt:
+  broker: '192.168.42.254'
+  port: 1883
+  # username: '<mqtt_user>'
+  # password: '<mqtt_password>'
+  # Start all MQTT published topics with the following prefix, make sure there is no trailing /
+  topic_prefix: 'devices/$devicename'

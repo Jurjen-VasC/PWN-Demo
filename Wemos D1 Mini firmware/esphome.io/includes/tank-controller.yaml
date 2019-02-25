@@ -1,0 +1,71 @@
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: d1_mini
+
+<<: !include wifi.yaml
+<<: !include mqtt.yaml
+
+# Status LED, the built-in LED is on D4
+status_led:
+  pin:
+    number: D4
+    inverted: False
+
+# Enable logging
+logger: 
+
+ota:
+  password: 'PWN'
+
+web_server:
+  port: 80
+
+sensor:
+  - platform: uptime
+    name: "Uptime Sensor $devicename"
+
+  # Wifi is a builtin sensor
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor $devicename"
+    update_interval: 10s
+
+  # The HC-SR04 sensor by uses two pins, 
+  - platform: ultrasonic
+    trigger_pin: D6
+    echo_pin: D7
+    update_interval: 2s
+    name: "Niveau Tank $tank_nummer"
+    unit_of_measurement: "%"
+    filters:
+      - filter_nan:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+        # Calculate the distances into a percentage representing
+        # how full the tank is.
+        # The maximum distance is an empty tank and is roughly 55 cm from the sensor
+        # Consider the tank full when the distance is only 10 cm.
+      - lambda: |-
+          return (100 - (((x * 100) - $min_distance) / ($max_distance - $min_distance) * 100));
+      - unique:
+
+# Example configuration entry
+output:
+  - platform: gpio
+    pin: D1 
+    id: 'pomp_uitvoer'
+  - platform: gpio
+    pin: D2
+    id: 'klep_uitvoer'
+switch:
+  - platform: output
+    name: "Pomp $tank_nummer"
+    output: 'pomp_uitvoer'
+    icon: "mdi:skip-next"
+  - platform: output
+    name: "Klep $tank_nummer"
+    output: 'klep_uitvoer'
+  - platform: restart
+    name: "Restart controller $devicename"
+

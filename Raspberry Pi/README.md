@@ -6,8 +6,8 @@ The Raspberry Pi is a version 3 device. This is great because it allows us to ru
 
 ## Setting up the Raspberry Pi
 
-First download and install the latest version of Hasbian on a SD card.  Hasbian is a special version of Raspbian that includes Home Assistent.
-Install the 32 bit version which is the recommended version at this time.
+First download and install the latest version of Hasbian on a SD card.  Hassbian is a special version of Raspbian that includes Home Assistent.
+Install the 32 bit version which is the recommended version at this time. Detailed instructions can be found [here](https://www.home-assistant.io/docs/installation/hassbian/).
 
 ### Getting the default files from Github
 
@@ -32,7 +32,7 @@ sudo python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platfo
 Installing is done according to the information on the [Getting started](https://esphome.io/guides/getting_started_command_line.html) page, which says to enter the following command:
 
 ``` bash
-sudo pip install esphomeyaml
+sudo pip install esphome
 ```
 
 ### Install Mosquitto
@@ -55,8 +55,29 @@ Add the following configuration snippet between the `tts:` and `cloud:` section:
 mqtt:
   broker: 127.0.0.1
   port: 1883
-  client_id: homeassistent
-  discovery: true
-  discovery_prefix: homeassistant
+#  client_id: homeassistent
+#  discovery: true
+#  discovery_prefix: homeassistant
 ```
 These settings will instruct Home Assistent to use the MQTT broker on the local system. Esphome firmware can use the topic `homeassistant/#` to announce devices which will then be auto-discovered.
+
+When mannually configuring devices we'll use style 2 of the config mentioned [here](https://www.home-assistant.io/docs/configuration/devices/)
+
+In the initial setup there are three controllers that control the pump and/or valve. They also measure the water level and are called controller_1, controller_3 and controller_5.
+
+### Install desktop on hassbian machine
+
+```sudo apt-get install raspberrypi-ui-mods``` is the command that will install the desktop. When the installation is done run ```sudo raspi-config``` and configure the system to automatically login in the graphical desktop.
+Select the following options: `3`, `B1` and `B4`.
+Also enable VNC with options: `5` and `P3`
+
+When done install additional software with: ```sudo apt install raspberrypi-ui-mods chromium-browser```
+
+Disable the automatic screen blanking by adding the following lines to the `[SeatDefaults]` section in the file `/etc/lightdm/lightdm.conf`.
+
+```
+# don't sleep the screen
+xserver-command=X -s 0 dpms
+```
+
+
