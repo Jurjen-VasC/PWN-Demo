@@ -1,0 +1,50 @@
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: d1_mini
+
+<<: !include wifi.yaml
+<<: !include mqtt.yaml
+
+# Status LED, the built-in LED is on D4
+status_led:
+  pin:
+    number: D4
+    inverted: False
+
+# Enable logging
+logger: 
+
+ota:
+  password: 'PWN'
+
+web_server:
+  port: 80
+
+sensor:
+  - platform: uptime
+    name: "Uptime Sensor $devicename"
+
+  # Wifi is a builtin sensor
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor $devicename"
+    update_interval: 10s
+
+  - platform: pulse_counter
+    name: "Flow door sensor $devicename"
+    pin: D2
+    update_interval: 2s
+    unit_of_measurement: "l/m"
+    filters:
+      - filter_nan:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+      - lambda: |-
+          return ( x / 100 );
+      - unique:
+
+switch:
+  - platform: restart
+    name: "Restart controller $devicename"
+

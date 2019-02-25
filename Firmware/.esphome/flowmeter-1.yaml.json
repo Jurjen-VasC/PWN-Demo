@@ -1,12 +1,12 @@
 {
-  "use_legacy_ota": false, 
+  "use_legacy_ota": true, 
   "arduino_version": "espressif8266@1.8.0", 
-  "address": "controller_1.local", 
+  "address": "controller_2.local", 
   "storage_version": 1, 
   "esphome_version": "1.11.1", 
-  "build_path": "controller_1", 
-  "name": "controller_1", 
-  "firmware_bin_path": "controller_1/.pioenvs/controller_1/firmware.bin", 
+  "build_path": "controller_2", 
+  "name": "controller_2", 
+  "firmware_bin_path": "controller_2/.pioenvs/controller_2/firmware.bin", 
   "esphome_core_version": {
     "tag": "v1.11.1", 
     "repository": "https://github.com/esphome/esphome-core.git"

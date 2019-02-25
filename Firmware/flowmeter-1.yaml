@@ -1,0 +1,6 @@
+substitutions:
+  # Iedere controller heeft ook een eigen naam. Deze moet uniek zijn.
+  devicename: "controller_2"
+  upper_devicename: "Controller_2"
+
+<<: !include includes/flowmeter-controller.yaml
