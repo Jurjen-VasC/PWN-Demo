@@ -76,6 +76,7 @@ Reboot the Raspberry Pi to activate the new configuration. If all goes well it w
 
 ## Controllers
 
+The controllers used are all Wemos D1 mini controllers ![](images/Wemos-D1.jpg). They are selected because of their built in WiFi and they are easy to connect to a PC using the builtin USB port.
 
 Each controller has a number and a specific function.
 Controller 1, 3 and 5 measure the level of the water inside the tank and they also control the valves and pumps.
@@ -110,6 +111,40 @@ Whenever you change some settings of the firware you can update it over the air.
 - The controller has to be connected to the same network as the Raspberry Pi.
 - The name of the controller can't change. This name is retrieved from the yaml files and is used to connect to the right controller.
 
+#### Connecting the hardware
 
+##### Level sensor
+The level is measured using a HC-SR04 device ![](images/HC-SR04.jpg).
 
+| HC-SR04 |  Wemos D1 mini |
+| --- | ---|
+| VCC |+5V (!) |
+| GND | GND |
+| Trig | D6 |
+| Echo | D7 |
+
+##### Relay board
+The pump and valve are controlled using the following relayboard:
+![](images/4-channel relay.jpg)
+	
+| Relay shield | Wemos D1 mini | Function |
+| --- | --- | --- |
+| VCC | 3V3 |
+| IN 1   | D1  | Valve |
+| IN 2   | D2  | Pump |
+| GND | GND |
+	
+	
+	
+
+##### Flow meter
+The flow is measured using a YF-S201C device ![](images/YF-S201C.jpg). This is a meter that generates pulses. By counting the pulses we know the flow.
+	
+| Flow meter |  Wemos D1 mini |
+| --- | ---|
+| Red |+5V (!)|
+| Yellow | D4 |
+| Black | GND |
+	
+	D4 is for pulsecounter 1.
  
