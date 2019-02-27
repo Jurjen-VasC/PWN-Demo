@@ -33,3 +33,6 @@ The Raspberry Pi also has a MQTT broker on board. The MQTT broker is Mosquitto
 
 ## WiFi
 In order to make the solution as robust as possible the demonstration setup has it's own WiFi network to isolate from external influences and less dependent on internet access.
+
+# Installing...
+Check the [installation guide](INSTALLING.md)
