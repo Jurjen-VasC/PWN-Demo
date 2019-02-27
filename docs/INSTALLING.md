@@ -89,7 +89,7 @@ Reboot the Raspberry Pi to activate the new configuration. If all goes well it w
 
 The controllers used are all Wemos D1 mini controllers.
 
-![](images/Wemos-D1.jpg)
+![](images/Wemos-D1.jpg | width=250)
 
 They are selected because of their built in WiFi and they are easy to connect to a PC using the builtin USB port.
 
@@ -132,7 +132,7 @@ There are some restrictions to this process:
 
 The level is measured using a HC-SR04 device.
 
-![](images/HC-SR04.jpg)
+![](images/HC-SR04.jpg | width=250)
 
 | HC-SR04 | Wemos D1 mini |
 |---------|---------------|
@@ -145,7 +145,7 @@ The level is measured using a HC-SR04 device.
 
 The pump and valve are controlled using the following relayboard:
 
-![](images/4-channel relay.jpg)
+![](images/4-channel relay.jpg | width=250)
 
 | Relay shield | Wemos D1 mini | Function |
 |--------------|---------------|----------|
@@ -159,7 +159,7 @@ Note that both IN1 and IN2 are connected to D1. This is because we need two rela
 ##### Flow meter
 
 The flow is measured using a YF-S201C device. 
-![](images/YF-S201C.jpg)
+![](images/YF-S201C.jpg | width=250)
 
 This is a meter that generates pulses. By counting the pulses we know the
 flow.
