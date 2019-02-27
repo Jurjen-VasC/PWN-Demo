@@ -7,7 +7,7 @@ The Demo solution consists of several components. Each component will be discuss
 
 WiFi is needed to allow the controllers to communicate with Rasperberry Pi. The Raspberry Pi is connecting via WiFi as well.
 
-The SSID of the WiFi network is `PWN-IoT` and the passphrase `DrinkWater`
+The SSID of the WiFi network is `PWN-IoT` and the passphrase `DrinkWater`.
 
 ## Raspberry Pi
 
@@ -145,7 +145,7 @@ The level is measured using a HC-SR04 device.
 
 The pump and valve are controlled using the following relayboard:
 
-![](images/4-channel relay.jpg)
+![](images/4-channel-relay.jpg)
 
 | Relay shield | Wemos D1 mini | Function |
 |--------------|---------------|----------|
