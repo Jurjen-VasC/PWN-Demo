@@ -1,4 +1,0 @@
- # Update Timezone Data
-- name: update tzdata
-  become: true
-  command: dpkg-reconfigure --frontend noninteractive tzdata
