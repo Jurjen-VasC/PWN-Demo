@@ -1,0 +1,193 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: PWN Demo
+  # Location required to calculate the time the sun rises and sets
+  latitude: 52.386559
+  longitude: 4.657118
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Amsterdam
+  # Customization file
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Show the introduction message on startup.
+introduction:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+
+# Text to speech
+tts:
+  - platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+#########
+#########
+homeassistant:
+  auth_providers:
+    - type: trusted_networks
+http:
+  trusted_networks:
+    - 127.0.0.1
+    - ::1
+    - 192.168.42.0/24
+    - 192.168.15.0/24
+    - fd00::/8
+
+mqtt:
+  broker: 192.168.42.254
+
+
+switch:
+# Controller 1
+  - platform: mqtt
+    name: Pomp 1
+    state_topic: devices/controller_1/switch/pomp_1/state
+    command_topic: devices/controller_1/switch/pomp_1/command
+    availability_topic: devices/controller_1/status
+    icon: mdi:skip-next
+  - platform: mqtt
+    name: Klep 1
+    state_topic: devices/controller_1/switch/klep_1/state
+    command_topic: devices/controller_1/switch/klep_1/command
+    availability_topic: devices/controller_1/status
+  - platform: mqtt
+    name: Restart controller controller_1
+    state_topic: devices/controller_1/switch/restart_controller_controller_1/state
+    command_topic: devices/controller_1/switch/restart_controller_controller_1/command
+    availability_topic: devices/controller_1/status
+# Controller 2
+  - platform: mqtt
+    name: Restart controller controller_2
+    state_topic: devices/controller_2/switch/restart_controller_controller_2/state
+    command_topic: devices/controller_2/switch/restart_controller_controller_2/command
+    availability_topic: devices/controller_2/status
+# Controller 3
+  - platform: mqtt
+    name: Pomp 2
+    state_topic: devices/controller_3/switch/pomp_2/state
+    command_topic: devices/controller_3/switch/pomp_2/command
+    availability_topic: devices/controller_3/status
+    icon: mdi:skip-next
+  - platform: mqtt
+    name: Klep 2
+    state_topic: devices/controller_3/switch/klep_2/state
+    command_topic: devices/controller_3/switch/klep_2/command
+    availability_topic: devices/controller_3/status
+  - platform: mqtt
+    name: Restart controller controller_3
+    state_topic: devices/controller_3/switch/restart_controller_controller_3/state
+    command_topic: devices/controller_3/switch/restart_controller_controller_3/command
+    availability_topic: devices/controller_3/status
+# Controller 4
+  - platform: mqtt
+    name: Restart controller controller_4
+    state_topic: devices/controller_4/switch/restart_controller_controller_4/state
+    command_topic: devices/controller_4/switch/restart_controller_controller_4/command
+    availability_topic: devices/controller_4/status
+# Controller 5
+  - platform: mqtt
+    name: Pomp 3
+    state_topic: devices/controller_5/switch/pomp_3/state
+    command_topic: devices/controller_5/switch/pomp_3/command
+    availability_topic: devices/controller_5/status
+    icon: mdi:skip-next
+  - platform: mqtt
+    name: Klep 3
+    state_topic: devices/controller_5/switch/klep_3/state
+    command_topic: devices/controller_5/switch/klep_3/command
+    availability_topic: devices/controller_5/status
+  - platform: mqtt
+    name: Restart controller controller_5
+    state_topic: devices/controller_5/switch/restart_controller_controller_5/state
+    command_topic: devices/controller_5/switch/restart_controller_controller_5/command
+    availability_topic: devices/controller_5/status
+
+
+sensor:
+# Controller 1
+  - platform: mqtt
+    name: Uptime Sensor controller_1
+    state_topic: devices/controller_1/sensor/uptime_sensor_controller_1/state
+    availability_topic: devices/controller_1/status
+  - platform: mqtt
+    name: WiFi Signal Sensor controller_1
+    state_topic: devices/controller_1/sensor/wifi_signal_sensor_controller_1/state
+    availability_topic: devices/controller_1/status
+  - platform: mqtt
+    name: Niveau Tank 1
+    state_topic: devices/controller_1/sensor/niveau_tank_1/state
+    availability_topic: devices/controller_1/status
+    unit_of_measurement: '%'
+# Controller 2
+  - platform: mqtt
+    name: Uptime Sensor controller_2
+    state_topic: devices/controller_2/sensor/uptime_sensor_controller_2/state
+    availability_topic: devices/controller_2/status
+  - platform: mqtt
+    name: WiFi Signal Sensor controller_2
+    state_topic: devices/controller_2/sensor/wifi_signal_sensor_controller_2/state
+    availability_topic: devices/controller_2/status
+  - platform: mqtt
+    name: Flow door sensor controller_2
+    state_topic: devices/controller_2/sensor/flow_door_sensor_controller_2/state
+    availability_topic: devices/controller_2/status
+    unit_of_measurement: l/m
+# Controller 3
+  - platform: mqtt
+    name: Uptime Sensor controller_3
+    state_topic: devices/controller_3/sensor/uptime_sensor_controller_3/state
+    availability_topic: devices/controller_3/status
+  - platform: mqtt
+    name: WiFi Signal Sensor controller_3
+    state_topic: devices/controller_3/sensor/wifi_signal_sensor_controller_3/state
+    availability_topic: devices/controller_3/status
+  - platform: mqtt
+    name: Niveau Tank 2
+    state_topic: devices/controller_3/sensor/niveau_tank_2/state
+    availability_topic: devices/controller_3/status
+    unit_of_measurement: '%'
+# Controller 4
+  - platform: mqtt
+    name: Uptime Sensor controller_4
+    state_topic: devices/controller_4/sensor/uptime_sensor_controller_4/state
+    availability_topic: devices/controller_4/status
+  - platform: mqtt
+    name: WiFi Signal Sensor controller_4
+    state_topic: devices/controller_4/sensor/wifi_signal_sensor_controller_4/state
+    availability_topic: devices/controller_4/status
+  - platform: mqtt
+    name: Flow door sensor controller_4
+    state_topic: devices/controller_4/sensor/flow_door_sensor_controller_4/state
+    availability_topic: devices/controller_4/status
+    unit_of_measurement: l/m
+# Contreller 5
+  - platform: mqtt
+    name: Uptime Sensor controller_5
+    state_topic: devices/controller_5/sensor/uptime_sensor_controller_5/state
+    availability_topic: devices/controller_5/status
+  - platform: mqtt
+    name: WiFi Signal Sensor controller_5
+    state_topic: devices/controller_5/sensor/wifi_signal_sensor_controller_5/state
+    availability_topic: devices/controller_5/status
+  - platform: mqtt
+    name: Niveau Tank 3
+    state_topic: devices/controller_5/sensor/niveau_tank_3/state
+    availability_topic: devices/controller_5/status
+    unit_of_measurement: '%'
+
