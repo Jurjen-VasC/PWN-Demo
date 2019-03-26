@@ -16,3 +16,4 @@
 
 - include: mosquitto.yml
 - include: nodered.yml
+- include: grafana.yml
