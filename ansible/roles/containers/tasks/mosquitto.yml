@@ -1,0 +1,13 @@
+- name: Create config directory
+  file:
+    path: /docker/mosquitto/data
+    state: directory
+
+- name: Create docker-compose.yml file
+  template:
+    src: 'docker-compose.yml.mosquitto.j2'
+    dest: "/docker/mosquitto/docker-compose.yml"
+
+- name: Run the stuff....
+  docker_service:
+    project_src: /docker/mosquitto

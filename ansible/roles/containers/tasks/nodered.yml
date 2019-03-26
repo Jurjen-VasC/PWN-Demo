@@ -1,0 +1,26 @@
+- name: Create config directory
+  file:
+    path: /docker/nodered/data
+    state: directory
+
+- name: Create docker-compose.yml file
+  template:
+    src: 'docker-compose.yml.node-red.j2'
+    dest: "/docker/nodered/docker-compose.yml"
+
+- name: Install example flow
+  copy:
+    src: 'flows.json'
+    dest: "/docker/nodered/data/flows.json"
+
+- name: Run the stuff....
+  docker_service:
+    project_src: /docker/nodered
+
+- name: Install some additional modueles in NodeRED
+  shell: docker exec node-red npm install node-red-contrib-ui-lineargauge node-red-dashboard
+
+- docker_service:
+    project_src: /docker/nodered
+    restarted: true
+

@@ -1,0 +1,10 @@
+- name: Configure dhcpcd to use static address for wlan0
+  template:
+    src: 'dhcpcd.conf.j2'
+    dest: "/etc/dhcpcd.conf"
+
+- name: Configure wpa_supplicant again, just in case
+  template:
+    src: 'wpa_supplicant.conf.j2'
+    dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
+

@@ -1,0 +1,73 @@
+---
+macaddrs:
+    fe:ed:de:ad:be:ef:
+        hostname: "pwn-demo"
+        domain: "local"
+        locale: "en_US.UTF-8"
+        timezone: "Europe/Amsterdam"
+        xkblayout: "us"
+        wifi_country: "NL"
+        enable_gui: True
+        enable_autologin: True
+        enable_bootwait: False
+        enable_bootsplash: False
+        enable_camera: False
+        enable_vnc: True
+        enable_spi: False
+        enable_i2c: False
+        enable_serial: True
+#        enable_serial_hw: True
+        enable_onewire: False
+        enable_rgpio: False
+    b8:27:eb:39:d7:57:
+        hostname: "clovermine"
+        domain: "local"
+        locale: "en_US.UTF-8"
+        timezone: "America/Los_Angeles"
+        xkblayout: "us"
+        wifi_country: "US"
+        enable_gui: True
+        enable_autologin: False
+        enable_bootwait: False
+        enable_bootsplash: False
+        enable_camera: False
+        enable_vnc: False
+        enable_spi: False
+        enable_i2c: False
+        enable_serial: True
+        enable_serial_hw: True
+        enable_onewire: False
+        enable_rgpio: False
+    b8:27:eb:ff:35:c7:
+        hostname: "cloverleaf"
+        domain: "local"
+        locale: "en_US.UTF-8"
+        timezone: "America/Los_Angeles"
+        xkblayout: "us"
+        enable_gui: False
+        enable_autologin: False
+        enable_bootwait: True
+        enable_bootsplash: False
+        enable_camera: False
+        enable_vnc: False
+        enable_spi: False
+        enable_i2c: False
+        enable_serial: True
+        enable_serial_hw: True
+        enable_onewire: False
+        enable_rgpio: False
+        extra_software:
+          - "w3m"
+          - "irssi"
+          - "screen"
+
+### Users that must be present on the system
+#create_users:
+#  - name: glock
+#    comment: "Glenn K. Lockwood"
+#    uid: 1024
+#    group: users
+#    # don't include the group from 'group:' above in the 'groups:' below; this
+#    # breaks idempotency for some reason
+#    groups: "adm,dialout,sudo,audio,video,plugdev,games,input,netdev,spi,i2c,gpio"
+#    pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjx1Fevx4XODj8pJy/qRZDwQCRwNl0tJ3gWlDy1dB/AtdapVh5XYDUI99R+JqqzGgME9Bif6p1K6bqClLQh7MeY57L9IyjtqBF2t6/vNeKdOYDYQcBwL1p7vbGNTfKxYF2G4Lw+tRVGr3c+sCvA6r5UUAIhXNXTs7fLZanO6JGwITlJFcxDXPmITEhoXu4yTFqA0j1yp/K7I7dvmlhG/Yq+8P6zTJww1Zpy3aMaJ9gB4KR9jclW67wQZ3kVkFcyJtHXRI/LTzfAitB9W1X0svXysy88DiZsBGm1UmrUuFD3JPRn0SRRYchW5RdZ7MDPYWUDWweZIeuWvWRKzMkB5VJ"

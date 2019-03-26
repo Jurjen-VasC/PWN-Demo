@@ -1,0 +1,40 @@
+---
+- name: install necessary apt packages
+  apt:
+    name:
+      - 'python3'
+      - 'python3-venv'
+      - 'python3-pip'
+      - 'python3-dev'
+      - 'build-essential'
+      - 'libffi-dev'
+      - 'libssl-dev'
+    state: present
+    update_cache: true
+
+- name: install configured additional apt packages
+  apt:
+    name: '{{ hass_apt_packages }}'
+    state: present
+  when: hass_apt_packages is defined
+
+- name: install raspberry bluetooth packages
+  apt:
+    name:
+      - 'pi-bluetooth'
+    state: present
+  when: ansible_lsb.id is defined and ansible_lsb.id == "Raspbian" and hass_bluetooth is defined and hass_bluetooth
+  tags: bluetooth
+
+- name: install general bluetooth packages
+  apt:
+    name:
+      - 'bluez'
+      - 'libglib2.0-dev'
+    state: present
+  when: hass_bluetooth is defined and hass_bluetooth
+  tags: bluetooth
+
+- name: set debian/ubuntu virtualenv command
+  set_fact:
+    hass_virtualenv_command: /usr/bin/python3 -m venv

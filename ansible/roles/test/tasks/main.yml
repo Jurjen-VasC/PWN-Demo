@@ -1,0 +1,3 @@
+    # Not a real task, but if it fails something is wrong with the installation
+    # of ansible
+    - debug: msg="Ansible running in {{ansible_lsb.id}}!"

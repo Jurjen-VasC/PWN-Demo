@@ -33,16 +33,16 @@ sensor:
   - platform: pulse_counter
     name: "Flow door sensor $devicename"
     pin: D2
-    update_interval: 2s
+    update_interval: 6s  # 1/10th of a minute.
     unit_of_measurement: "l/m"
     filters:
       - filter_nan:
       - sliding_window_moving_average:
-          window_size: 5
+          window_size: 1
           send_every: 1
       - lambda: |-
           return ( x / 100 );
-      - unique:
+#      - unique:
 
 switch:
   - platform: restart

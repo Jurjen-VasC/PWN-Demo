@@ -1,0 +1,25 @@
+---
+- name: add IUM repository
+  yum:
+    name: 'https://centos7.iuscommunity.org/ius-release.rpm'
+    state: present
+    update_cache: true
+
+- name: install necessary centos packages
+  yum:
+    name:
+      - 'python36u'
+      - 'python36u-pip'
+      - 'python36u-devel'
+    state: present
+    update_cache: true
+
+- name: install configured additional centos packages
+  yum:
+    name: '{{ hass_packages }}'
+    state: present
+  when: hass_packages is defined
+
+- name: set centos virtualenv command
+  set_fact:
+    hass_virtualenv_command: /usr/bin/python3.6 -m venv

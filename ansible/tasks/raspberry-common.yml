@@ -1,0 +1,24 @@
+    # Add items to the list of packages that have to be installed.
+    - name: Install base
+      apt:
+        update_cache: yes
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - realvnc-vnc-server
+        - realvnc-vnc-viewer
+        - vim
+      tags:
+        - base
+
+    # Modify the configuration of the GUI.
+    - name: generate /etc/lightdm/lightdm.conf
+      template:
+        src: lightdm.conf.j2
+        dest: /etc/lightdm/lightdm.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart lightdm service
+      tags:
+        - lightdm

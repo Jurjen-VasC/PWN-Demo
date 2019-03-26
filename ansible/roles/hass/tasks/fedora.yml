@@ -1,0 +1,19 @@
+---
+- name: install necessary fedora packages
+  dnf:
+    name:
+      - 'python3'
+      - 'python3-virtualenv'
+      - 'python3-pip'
+      - 'python3-devel'
+    state: present
+
+- name: install configured additional fedora packages
+  yum:
+    name: '{{ hass_packages }}'
+    state: present
+  when: hass_packages is defined
+
+- name: set fedora virtualenv command
+  set_fact:
+    hass_virtualenv_command: /usr/bin/python3 -m venv

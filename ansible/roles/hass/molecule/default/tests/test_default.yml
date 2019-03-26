@@ -1,0 +1,61 @@
+# Molecule managed
+
+---
+file:
+  /opt/hass/bin/hass:
+    exists: true
+  /home/hass/.homeassistant:
+    exists: true
+    mode: "0755"
+    filetype: directory
+  /home/hass/.homeassistant/.HA_VERSION:
+    exists: true
+    contains:
+      - {{ .Env.hass_version }}
+package:
+{{if (or (eq .Env.distro "debian") (eq .Env.distro "ubuntu"))}}
+  python3:
+    installed: true
+  python3-venv:
+    installed: true
+  python3-pip:
+    installed: true
+  python3-dev:
+    installed: true
+  build-essential:
+    installed: true
+  libffi-dev:
+    installed: true
+  libssl-dev:
+    installed: true
+{{end}}
+{{if eq .Env.distro "centos"}}
+  python36u:
+    installed: true
+  python36u-pip:
+    installed: true
+  python36u-devel:
+    installed: true
+{{end}}
+{{if eq .Env.distro "fedora"}}
+  python3:
+    installed: true
+  python3-virtualenv:
+    installed: true
+  python3-pip:
+    installed: true
+  python3-devel:
+    installed: true
+{{end}}
+user:
+  hass:
+    exists: true
+    home: /home/hass
+    shell: /sbin/nologin
+service:
+  hass:
+    enabled: true
+    running: true
+port:
+  tcp:8123:
+    listening: true

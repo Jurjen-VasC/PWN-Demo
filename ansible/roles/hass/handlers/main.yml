@@ -1,0 +1,7 @@
+---
+# handlers file for hass
+- name: restart hass
+  service:
+    name: hass
+    state: restarted
+  when: not ansible_check_mode

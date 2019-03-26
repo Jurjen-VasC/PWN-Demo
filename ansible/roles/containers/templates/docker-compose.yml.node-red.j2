@@ -1,0 +1,21 @@
+version: '3'
+services:
+  nodered:
+    image: "nodered/node-red-docker:rpi-v8"
+
+    container_name: node-red
+    hostname: node-red.local
+
+    ports:
+     - "1880:1880"
+
+    volumes:
+     - /docker/nodered/data:/data
+     - /etc/localtime:/etc/localtime:ro
+
+    cap_add:
+     - NET_ADMIN
+
+    user: root
+
+    restart: unless-stopped

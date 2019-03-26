@@ -1,0 +1,64 @@
+---
+- name: Add encryption key for the Docker and K8s repository
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items:
+    - https://download.docker.com/linux/raspbian/gpg
+    - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+- name: Clean Docker and K8s repository files to be idem-potent
+  file:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/apt/sources.list.d/docker.list
+    - /etc/apt/sources.list.d/kubernetes.list
+- name: Recreate Docker and K8s repository files
+  file:
+    name: "{{ item }}"
+    state: touch
+  with_items:
+    - /etc/apt/sources.list.d/docker.list
+    - /etc/apt/sources.list.d/kubernetes.list
+- name: Add Docker and K8s repository to the list of respositories
+  lineinfile:
+    path: /etc/apt/sources.list.d/{{ item.category }}.list
+    line: "{{ item.url }}"
+  with_items:
+    - { url: 'deb [arch=armhf] https://download.docker.com/linux/raspbian stretch stable', category: 'docker'     }
+    - { url: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'                      , category: 'kubernetes' }
+- name: Install packages to allow apt to use HTTPS repositories
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+- name: Update list of available repositories
+  apt:
+    update_cache: yes
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+- name: Install Docker and K8s binaries
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-ce
+    - kubelet
+    - kubeadm
+    - kubectl
+    - kubernetes-cni
+#- name: Turn off swap
+#  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+- name: Activating cgroup
+  lineinfile:
+    path: /boot/cmdline.txt
+    backrefs: true
+    regexp: '^(.*rootwait)$'
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1'
+#- name: Rebooting
+#  shell: reboot now
+#  ignore_errors: true

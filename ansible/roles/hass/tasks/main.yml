@@ -1,0 +1,136 @@
+---
+# tasks file for hass
+- include: debian.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- include: centos.yml
+  when: ansible_distribution == "CentOS"
+
+- include: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- include: config.yml
+
+- name: enable w1-gpio
+  lineinfile:
+    dest: '/boot/config.txt'
+    line: 'dtoverlay=w1-gpio'
+  when: ansible_lsb.id is defined and ansible_lsb.id == "Raspbian" and hass_w1 is defined and hass_w1
+  tags: w1
+
+- name: getent passwd
+  getent:
+    database: passwd
+
+- name: create user
+  user:
+    name: "{{ hass_user }}"
+    comment: "Home Assistant"
+    createhome: true
+    system: true
+    groups: dialout
+    shell: "/sbin/nologin"
+  when: hass_user not in getent_passwd
+
+- name: adding user to group gpio
+  user:
+    name: '{{ hass_user }}'
+    groups: 'gpio'
+    append: true
+  when: ansible_lsb.id is defined and ansible_lsb.id == "Raspbian" and hass_w1 is defined and hass_w1 and hass_user in getent_passwd
+  tags: w1
+
+- name: adding user to group bluetooth
+  user:
+    name: '{{ hass_user }}'
+    groups: 'bluetooth'
+    append: true
+  when: hass_bluetooth is defined and hass_bluetooth and hass_user in getent_passwd
+  tags: bluetooth
+
+- name: getent passwd
+  getent:
+    database: passwd
+
+- name: ensure configuration directory exists
+  file:
+    path: '{{ hass_config }}'
+    state: directory
+    mode: 0755
+    owner: '{{ hass_user }}'
+    group: '{{ hass_user }}'
+  when: hass_user in getent_passwd
+
+- name: create hass directory
+  file:
+    path: '{{ hass_virtualenv }}'
+    state: directory
+    mode: 0755
+    owner: '{{ hass_user }}'
+    group: '{{ hass_user }}'
+  when: hass_user in getent_passwd
+
+- name: get latest hass version
+  uri:
+    url: https://api.github.com/repos/home-assistant/home-assistant/releases/latest
+    return_content: true
+  check_mode: false
+  register: json_reponse
+  when: hass_version is not defined
+
+- name: set hass_version to latest
+  set_fact:
+    hass_version: '{{ json_reponse.json.name }}'
+  when: hass_version is not defined
+
+- name: set fact for needed pip packages
+  set_fact:
+    hass_pip_packages_needed:
+      - wheel
+      - homeassistant=={{ hass_version }}
+
+- name: set fact for merged needed and additional pip packages
+  set_fact:
+    hass_pip_packages: "{{ hass_pip_packages_needed }} + {{ hass_pip_packages }}"
+  when: hass_pip_packages is defined
+
+- name: set fact for only needed pip packages
+  set_fact:
+    hass_pip_packages: "{{ hass_pip_packages_needed }}"
+  when: hass_pip_packages is not defined
+
+- name: install home assistant and additional pip packages
+  pip:
+    name: "{{ hass_pip_packages }}"
+    state: present
+    extra_args: --upgrade
+    virtualenv: '{{ hass_virtualenv }}'
+    virtualenv_command: '{{ hass_virtualenv_command }}'
+  become: true
+  become_user: '{{ hass_user }}'
+  when: hass_user in getent_passwd and hass_version is defined
+  notify: restart hass
+
+- name: copy home assistant unit file
+  copy:
+    content: |
+      [Unit]
+      Description=Home Assistant
+      After=network.target
+
+      [Service]
+      Type=simple
+      User={{ hass_user }}
+      ExecStart={{ hass_virtualenv }}/bin/hass -c "{{ hass_config }}"
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/hass.service
+
+- name: enable home assistant
+  service:
+    name: hass
+    enabled: true
+    state: started
+  when: not ansible_check_mode
