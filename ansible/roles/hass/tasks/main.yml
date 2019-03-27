@@ -9,7 +9,6 @@
 - include: fedora.yml
   when: ansible_distribution == "Fedora"
 
-- include: config.yml
 
 - name: enable w1-gpio
   lineinfile:
@@ -135,3 +134,5 @@
     enabled: true
     state: started
   when: not ansible_check_mode
+
+- include: config.yml

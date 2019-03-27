@@ -19,7 +19,7 @@
     restarted: true
 
 - name: Create influx database
-  shell: docker exec -it influxdb influx -execute 'create database home_assistant'
+  shell: docker exec influxdb influx -execute 'create database home_assistant'
 #  influx_database:
 #    hostname: "{{influxdb_ip_address}}"
 #    database_name: "{{influx_database_name}}"
