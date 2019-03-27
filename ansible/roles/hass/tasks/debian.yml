@@ -9,6 +9,7 @@
       - 'build-essential'
       - 'libffi-dev'
       - 'libssl-dev'
+      - 'virtualenv'
     state: present
     update_cache: true
 

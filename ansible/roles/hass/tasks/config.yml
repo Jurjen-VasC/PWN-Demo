@@ -1,3 +1,8 @@
+- name: Create config directory
+  file:
+    path: /home/pi/.homeassistant
+    state: directory
+
 - name: create default configuration file for PWN
   copy:
     content: |
