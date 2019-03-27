@@ -22,7 +22,7 @@
     - /etc/apt/sources.list.d/kubernetes.list
 - name: Add Docker and K8s repository to the list of respositories
   lineinfile:
-    path: /etc/apt/sources.list.d/{{ item.category }}.list
+    dest: /etc/apt/sources.list.d/{{item.category}}.list
     line: "{{ item.url }}"
   with_items:
     - { url: 'deb [arch=armhf] https://download.docker.com/linux/raspbian stretch stable', category: 'docker'     }
