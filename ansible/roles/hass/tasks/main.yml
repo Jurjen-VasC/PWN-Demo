@@ -105,7 +105,8 @@
     state: present
     extra_args: --upgrade
     virtualenv: '{{ hass_virtualenv }}'
-    virtualenv_command: '{{ hass_virtualenv_command }}'
+#    virtualenv_command: '{{ hass_virtualenv_command }}'
+    virtualenv_command: 'virtualenv'
   become: true
   become_user: '{{ hass_user }}'
   when: hass_user in getent_passwd and hass_version is defined
