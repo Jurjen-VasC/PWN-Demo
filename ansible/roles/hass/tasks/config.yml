@@ -8,20 +8,16 @@
     port: 8123
     delay: 10 
 
-- name: Add configuration entries for PWN, sensors first.
+- name: Add configuration entries for PWN, starting with mqtt broker
   blockinfile:
     path: /home/pi/.homeassistant/configuration.yaml
-    insertafter: "discovery:"
+    insertafter: "cloud:"
     content: |
-
+      
       mqtt:
         broker: 192.168.42.254
 
-- name: Add configuration entries for PWN, sensors first.
-  blockinfile:
-    path: /home/pi/.homeassistant/configuration.yaml
-    insertafter: "sensor:"
-    content: |
+      sensor:
       # Controller 1
         - platform: mqtt
           name: Uptime Sensor controller_1
@@ -92,13 +88,7 @@
           state_topic: devices/controller_5/sensor/niveau_tank_3/state
           availability_topic: devices/controller_5/status
           unit_of_measurement: '%'
-
-
-- name: Add configuration entries for PWN, switches next
-  blockinfile:
-    path: /home/pi/.homeassistant/configuration.yaml
-    insertafter: "cloud:"
-    content: |
+      
       switch:
       # Controller 1
         - platform: mqtt

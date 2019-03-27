@@ -129,10 +129,10 @@
     dest: /etc/systemd/system/hass.service
 
 - name: enable home assistant
-  service:
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
     name: hass
-    enabled: true
-    state: started
-  when: not ansible_check_mode
 
 - include: config.yml
