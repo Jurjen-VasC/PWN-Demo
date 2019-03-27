@@ -1,0 +1,5 @@
+---
+influxdb_ip_address: "192.168.42.254"
+influx_database_name: "home_assistant"
+grafana_admin: "admin"
+grafana_password: "admin"

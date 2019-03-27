@@ -8,11 +8,31 @@
     src: 'docker-compose.yml.grafana.j2'
     dest: "/docker/grafana/docker-compose.yml"
 
+- name: Create env.influxdb file
+  template:
+    src: 'env.influxdb.j2'
+    dest: "/docker/grafana/env.influxdb"
+
 - name: Run the stuff....
   docker_service:
     project_src: /docker/grafana
-
-- docker_service:
-    project_src: /docker/grafana
     restarted: true
 
+- name: Create influx database
+  shell: docker exec -it influxdb influx -execute 'create database home_assistant'
+#  influx_database:
+#    hostname: "{{influxdb_ip_address}}"
+#    database_name: "{{influx_database_name}}"
+#    state: present
+
+#- name: Create influxdb datasource
+#  grafana_datasource:
+#    name: "datasource-influxdb"
+#    grafana_url: "http://{{influxdb_ip_address}}"
+#    grafana_user: "{{grafana_admin}}"
+#    grafana_password: "{{grafana_password}}"
+#    org_id: "1"
+#    ds_type: "influxdb"
+#    url: "http://{{influxdb_ip_address}}:8086"
+#    database: "{{influx_database_name}}"
+#    time_interval: ">10s"
