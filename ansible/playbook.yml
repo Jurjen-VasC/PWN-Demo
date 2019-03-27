@@ -36,6 +36,7 @@
 
   roles:
     - test
+    - ansible
     - common
     - network
     - docker

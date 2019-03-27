@@ -1,0 +1,12 @@
+---
+- name: Add Ansible via PIP
+  pip:
+    name: ansible
+
+- name: Remove old version of Ansible
+  apt:
+    name: ansible
+    state: absent
+
+#- name: Clear cached paths in shell
+#  shell: 'hash -r'
