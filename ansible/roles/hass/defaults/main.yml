@@ -1,9 +1,10 @@
 ---
 # defaults file for hass
 # hass_version: '0.81.6'
-hass_user: 'hass'
+hass_user: 'pi'
 hass_config: '/home/{{ hass_user }}/.homeassistant'
 hass_virtualenv: '/opt/hass'
+#hass_virtualenv_command: '/usr/bin/python3 -m venv' 
 hass_w1: false
 hass_bluetooth: false
 # hass_pip_packages:
