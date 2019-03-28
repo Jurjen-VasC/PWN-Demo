@@ -38,7 +38,7 @@ sensor:
     name: "Niveau Tank $tank_nummer"
     unit_of_measurement: "%"
     filters:
-      - filter_nan:
+      - filter_out: nan
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
@@ -48,7 +48,7 @@ sensor:
         # Consider the tank full when the distance is only 10 cm.
       - lambda: |-
           return (100 - (((x * 100) - $min_distance) / ($max_distance - $min_distance) * 100));
-      - unique:
+      - delta: 1.0
 
 # Example configuration entry
 output:

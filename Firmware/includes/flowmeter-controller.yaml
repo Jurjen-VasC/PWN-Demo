@@ -36,7 +36,7 @@ sensor:
     update_interval: 6s  # 1/10th of a minute.
     unit_of_measurement: "l/m"
     filters:
-      - filter_nan:
+      - filter_out: nan
       - sliding_window_moving_average:
           window_size: 1
           send_every: 1
