@@ -63,9 +63,11 @@ switch:
     name: "Pomp $tank_nummer"
     output: 'pomp_uitvoer'
     icon: "mdi:skip-next"
+    inverted: True
   - platform: output
     name: "Klep $tank_nummer"
     output: 'klep_uitvoer'
+    inverted: True
   - platform: restart
     name: "Restart controller $devicename"
 
