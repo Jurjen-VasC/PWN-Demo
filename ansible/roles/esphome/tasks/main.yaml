@@ -1,3 +1,7 @@
+---
+
 - name: Install ESPHOME
+  vars:
+    ansible_python_interpreter: /usr/bin/python
   pip:
-    esphome
+    name: esphome

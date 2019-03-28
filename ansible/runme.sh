@@ -1,7 +1,6 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt install ansible
+# which ansible || apt update   && apt install -y ansible
 
 ansible-playbook  -u pi $@ playbook.yml 
 rm playbook.retry
