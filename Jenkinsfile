@@ -6,7 +6,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'pip install esphome'
+                sh '''
+		docker run --rm --net=host -v "$(pwd)":/config esphome/esphome flow-1.yaml compile
+		'''
             }
         }
         stage('Test') {
