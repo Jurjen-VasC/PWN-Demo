@@ -1,11 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'esphome/esphome'
-      args '--entrypoint /bin/bash -v Firmware:/config'
-    }
-
-  }
+  agent any
   stages {
     stage('Build') {
       steps {
