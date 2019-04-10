@@ -6,6 +6,7 @@ pipeline {
         stage('Build') {
             agent {
                docker {
+                  label 'docker'	// Also configure Jenkins Docker in server
                   image 'esphome/esphome'
                   args '--entrypoint bash -v .:/config'  // start interactive in esphome container
                }
