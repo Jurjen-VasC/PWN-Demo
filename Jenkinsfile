@@ -5,7 +5,8 @@ pipeline {
       steps {
         isUnix()
         sh '''#!/bin/bash
-find / -name \'python*\''''
+find / -name \'python*\'
+pip install ESPHome'''
       }
     }
   }
