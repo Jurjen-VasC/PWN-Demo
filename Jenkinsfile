@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'esphome/esphome'
+    }
+
+  }
   stages {
     stage('Build') {
       steps {
