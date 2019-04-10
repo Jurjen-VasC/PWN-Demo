@@ -4,8 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Starting Build'
-        sh '''ls -l
-pwd'''
+        sh 'pip install ESPHome'
       }
     }
   }
