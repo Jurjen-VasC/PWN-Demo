@@ -5,16 +5,14 @@ pipeline {
       steps {
         echo 'Starting Build'
         sh '''#!/bin/bash
-
+apk add --update py-pip
 which pip
 which virtualenv
 which passed
-ls /etc
 
-virtualenv --no-site-packages ESPHome
-cd esphome
-pwd
-pip install ESPHome'''
+pip install ESPHome
+
+ls'''
       }
     }
   }
