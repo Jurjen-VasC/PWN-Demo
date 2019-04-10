@@ -4,7 +4,11 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Starting Build'
-        sh 'pip install ESPHome'
+        sh '''#!/bin/bash
+virtualenv --no-site-packages ESPHome
+cd esphome
+pwd
+pip install ESPHome'''
       }
     }
   }
