@@ -2,6 +2,11 @@ esphome:
   name: $devicename
   platform: ESP8266
   board: d1_mini
+  on_boot:
+    priority: 75
+    then:
+      - switch.turn_off: pomp_switch
+      - switch.turn_off: klep_switch
 
 <<: !include wifi.yaml
 <<: !include mqtt.yaml
@@ -37,6 +42,7 @@ sensor:
     update_interval: 2s
     name: "Niveau Tank $tank_nummer"
     unit_of_measurement: "%"
+    accuracy_decimals: 0
     filters:
       - filter_out: nan
       - sliding_window_moving_average:
@@ -46,9 +52,13 @@ sensor:
         # how full the tank is.
         # The maximum distance is an empty tank and is roughly 55 cm from the sensor
         # Consider the tank full when the distance is only 10 cm.
+#      - calibrate_linear:
+#          - 50 -> 0
+#          - 10 -> 100
       - lambda: |-
           return (100 - (((x * 100) - $min_distance) / ($max_distance - $min_distance) * 100));
       - delta: 1.0
+
 
 # Example configuration entry
 output:
@@ -63,9 +73,13 @@ switch:
     name: "Pomp $tank_nummer"
     output: 'pomp_uitvoer'
     icon: "mdi:skip-next"
+    inverted: True
+    id: pomp_switch
   - platform: output
     name: "Klep $tank_nummer"
     output: 'klep_uitvoer'
+    inverted: True
+    id: klep_switch
   - platform: restart
     name: "Restart controller $devicename"
 
