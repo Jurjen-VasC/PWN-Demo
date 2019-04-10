@@ -1,14 +1,20 @@
 
 pipeline {
     agent any
-
+// docker run -it --entrypoint bash -v $(pwd):/config esphome/esphome 
     stages {
         stage('Build') {
+            agent {
+               docker {
+                  image: esphome/esphome
+                  args: --entrypoint bash -v .:/config
+               }
+	    }
             steps {
                 echo 'Building..'
                 sh '''
                 cd Firmware
-		docker pull  esphome/esphome
+                esphome flowmeter-1.yaml compile
 		'''
             }
         }
