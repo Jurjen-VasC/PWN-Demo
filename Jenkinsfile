@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'esphome/esphome'
-      args '--entrypoint bash -v Firmware:/config'
+      args '--entrypoint /bin/bash -v Firmware:/config'
     }
 
   }
