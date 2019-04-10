@@ -5,7 +5,7 @@ pipeline {
       steps {
         isUnix()
         sh '''#!/bin/bash
-which python'''
+find / -name \'python*\''''
       }
     }
   }
