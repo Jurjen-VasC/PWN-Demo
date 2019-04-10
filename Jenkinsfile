@@ -10,6 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Starting Build'
+        sh 'esphome flowmeter-2.yaml compile'
       }
     }
   }
