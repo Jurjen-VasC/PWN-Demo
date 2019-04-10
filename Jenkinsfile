@@ -1,18 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('Prepare') {
       steps {
-        echo 'Starting Build'
-        sh '''#!/bin/bash
-sudo apk add --update py-pip
-which pip
-which virtualenv
-which passed
-
-pip install ESPHome
-
-ls'''
+        isUnix()
       }
     }
   }
