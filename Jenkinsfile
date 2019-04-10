@@ -7,7 +7,7 @@ pipeline {
             agent {
                docker {
                   image: esphome/esphome
-                  args: --entrypoint bash -v .:/config
+                  args: '--entrypoint bash -v .:/config'  // start interactive in esphome container
                }
 	    }
             steps {
