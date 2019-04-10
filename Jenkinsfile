@@ -4,6 +4,8 @@ pipeline {
     stage('Prepare') {
       steps {
         isUnix()
+        sh '''#!/bin/bash
+which python'''
       }
     }
   }
