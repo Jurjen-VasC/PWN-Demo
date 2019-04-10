@@ -9,7 +9,6 @@ pipeline {
     stage('Build') {
       agent {
         docker {
-          label 'docker'
           image 'esphome/esphome'
           args '--entrypoint bash -v .:/config'
         }
