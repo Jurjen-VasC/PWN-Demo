@@ -8,7 +8,7 @@ pipeline {
                 echo 'Building..'
                 sh '''
                 cd Firmware
-		docker run --rm --net=host -v "$(pwd)":/config esphome/esphome flowmeter-1.yaml compile
+		docker pull  esphome/esphome
 		'''
             }
         }
