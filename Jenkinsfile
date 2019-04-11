@@ -7,12 +7,7 @@ pipeline {
   }
   stages {
     stage('Prepare') {
-      agent {
-        docker {
-          image 'python:2.7'
-        }
-
-      }
+      agent any
       steps {
         sh 'pip install esphome'
       }
