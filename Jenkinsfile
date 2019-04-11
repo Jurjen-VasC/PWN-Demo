@@ -9,7 +9,8 @@ pipeline {
     stage('Prepare') {
       agent any
       steps {
-        sh 'pip install esphome'
+        sh '''pip install esphome
+exit'''
       }
     }
     stage('Compile') {
