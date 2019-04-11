@@ -28,7 +28,7 @@ exit'''
       agent any
       steps {
         echo 'Time to archive build result'
-        sh 'ls -lRa Controller*'
+        sh 'ls -lRa *'
       }
     }
   }
