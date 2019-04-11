@@ -12,5 +12,13 @@ pipeline {
         sh 'pip install esphome'
       }
     }
+    stage('Compile') {
+      steps {
+        sh '''ls
+pwd
+cd Firmware
+esphome flowmeter-2.yaml compile'''
+      }
+    }
   }
 }
