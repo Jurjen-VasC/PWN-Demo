@@ -17,7 +17,9 @@ exit'''
       steps {
         sh 'platformio platform update'
         dir(path: 'Firmware') {
-          sh 'esphome flowmeter-1.yaml compile'
+          sh '''
+		esphome flowmeter-1.yaml compile
+	  '''
           sh 'esphome flowmeter-2.yaml compile'
           sh 'esphome flowmeter-3.yaml compile'
         }
