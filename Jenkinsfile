@@ -4,7 +4,7 @@ pipeline {
     stage('Prepare') {
       agent {
         docker {
-          image 'python'
+          image 'python:2.7'
         }
 
       }
