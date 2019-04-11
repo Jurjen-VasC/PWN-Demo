@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'python:2.7'
+    }
+
+  }
   stages {
     stage('Prepare') {
       agent {
