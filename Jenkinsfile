@@ -15,10 +15,19 @@ exit'''
     }
     stage('Compile') {
       steps {
-        sh '''ls
-pwd
-cd Firmware
-esphome flowmeter-2.yaml compile'''
+        sh 'platformio platform update'
+        dir(path: 'Firmware') {
+          sh 'esphome flowmeter-1.yaml compile'
+          sh 'esphome flowmeter-2.yaml compile'
+          sh 'esphome flowmeter-3.yaml compile'
+        }
+
+      }
+    }
+    stage('') {
+      agent any
+      steps {
+        archiveArtifacts(artifacts: 'firmware.bin', onlyIfSuccessful: true)
       }
     }
   }
