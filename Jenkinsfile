@@ -24,10 +24,11 @@ exit'''
 
       }
     }
-    stage('') {
+    stage('error') {
       agent any
       steps {
-        archiveArtifacts(artifacts: 'firmware.bin', onlyIfSuccessful: true)
+        echo 'Time to archive build result'
+        sh 'ls -lRa Controller*'
       }
     }
   }
