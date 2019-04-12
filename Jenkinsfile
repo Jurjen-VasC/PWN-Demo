@@ -20,11 +20,7 @@ exit'''
         sh 'platformio platform update'
         dir(path: 'Firmware') {
           sh '''esphome flowmeter-1.yaml compile
-ls -la controller*'''
-          sh '''esphome flowmeter-2.yaml compile
-ls -la controller*'''
-          sh '''esphome flowmeter-3.yaml compile
-ls -la controller*'''
+mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin'''
         }
 
       }
