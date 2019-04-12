@@ -29,7 +29,9 @@ ls -la controller*'''
     }
     stage('Deliver') {
       steps {
-        sh '''cd Firmware
+        sh '''cd
+ls -aR
+cd Firmware
 cp controller_1/.pioenvs/controller_1/firmware.bin controller_1.bin'''
         archiveArtifacts 'Firmware/*bin'
       }
