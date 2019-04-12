@@ -13,9 +13,10 @@ pipeline {
 exit'''
       }
     }
-    stage('Compile') {
+    stage('Build') {
       agent any
       steps {
+        echo 'Starting Build'
         sh 'platformio platform update'
         dir(path: 'Firmware') {
           sh '''esphome flowmeter-1.yaml compile
@@ -28,11 +29,15 @@ ls -la controller*'''
 
       }
     }
-    stage('Deliver') {
+    stage('Test') {
       agent any
       steps {
-        sh '''cd
-	  pwd'''
+        echo 'Starting Test'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Starting Deploy'
       }
     }
   }
