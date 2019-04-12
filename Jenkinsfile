@@ -14,6 +14,7 @@ exit'''
       }
     }
     stage('Compile') {
+      agent any
       steps {
         sh 'platformio platform update'
         dir(path: 'Firmware') {
@@ -28,6 +29,7 @@ ls -la controller*'''
       }
     }
     stage('Deliver') {
+      agent any
       steps {
         sh '''cd
 ls -aR
