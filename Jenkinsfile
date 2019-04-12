@@ -25,13 +25,13 @@ mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin'''
 
         sh '''pwd
 ls -la'''
+        archiveArtifacts(artifacts: 'controller_*.bin', fingerprint: true, onlyIfSuccessful: true)
       }
     }
     stage('Test') {
       agent any
       steps {
         echo 'Starting Test'
-        archiveArtifacts(fingerprint: true, onlyIfSuccessful: true, artifacts: 'controller_2.bin')
       }
     }
     stage('Deploy') {
