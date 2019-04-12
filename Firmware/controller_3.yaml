@@ -1,0 +1,12 @@
+substitutions:
+  # Iedere tank heeft een eigen nummer. Deze wordt gebruikt om binnen MQTT de tank te identificeren
+  tank_nummer: "2"
+  # Iedere controller heeft ook een eigen naam. Deze moet uniek zijn.
+  devicename: "controller_3"
+  upper_devicename: "Controller_3"
+  # De volgende parameters geven aan hoe laag het water mag staan (max_distance) en hoe hoog (min_distance)
+  # ten opzichte van de sensor in de tank. (Deze zit aan de bovenkant)
+  max_distance: "55"
+  min_distance: "10"
+
+<<: !include includes/tank-controller.yaml
