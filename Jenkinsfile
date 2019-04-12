@@ -29,6 +29,7 @@ mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin'''
       agent any
       steps {
         echo 'Starting Test'
+        archiveArtifacts(fingerprint: true, onlyIfSuccessful: true, artifacts: 'controller_2.bin')
       }
     }
     stage('Deploy') {
