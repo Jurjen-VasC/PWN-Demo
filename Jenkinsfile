@@ -23,6 +23,8 @@ exit'''
 mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin'''
         }
 
+        sh '''pwd
+ls -la'''
       }
     }
     stage('Test') {
