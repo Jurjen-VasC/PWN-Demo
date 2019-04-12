@@ -25,7 +25,9 @@ mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin'''
 
         sh '''pwd
 ls -la'''
+        stash(name: 'Firmwares', includes: '*bin')
         archiveArtifacts(artifacts: 'controller_*.bin', fingerprint: true, onlyIfSuccessful: true)
+        fingerprint '*bin'
       }
     }
     stage('Test') {
@@ -37,6 +39,7 @@ ls -la'''
     stage('Deploy') {
       steps {
         echo 'Starting Deploy'
+        unstash 'Firmwares'
       }
     }
   }
