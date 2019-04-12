@@ -27,11 +27,11 @@ ls -la controller*'''
 
       }
     }
-    stage('error') {
-      agent any
+    stage('Deliver') {
       steps {
-        echo 'Time to archive build result'
-        sh 'ls -lRa *'
+        sh '''cd Firmware
+cp controller_1/.pioenvs/controller_1/firmware.bin controller_1.bin'''
+        archiveArtifacts 'Firmware/*bin'
       }
     }
   }
