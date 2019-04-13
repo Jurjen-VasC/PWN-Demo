@@ -1,9 +1,6 @@
 pipeline {
   agent any
-        sh '''pip install esphome
-exit'''
-      }
-    }
+  stages {
     stage('Build') {
       agent {
         docker {
