@@ -14,11 +14,11 @@ pipeline {
 		platformio platform update
 	'''
         dir(path: 'Firmware') {
-          sh '''esphome flowmeter-1.yaml compile
-		mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin
-
-		esphome flowmeter-2.yaml compile
-		mv controller_4/.pioenvs/controller_4/firmware.bin ../controller_4.bin
+          sh '''for i in {1..6}
+		do
+			esphome controller_${i}.yaml compile
+			mv controller_${i}/.pioenvs/controller_${i}/firmware.bin ../controller_${i}.bin
+		done
 	  '''
         }
 
