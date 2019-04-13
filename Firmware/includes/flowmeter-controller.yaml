@@ -30,6 +30,12 @@ sensor:
     name: "WiFi Signal Sensor $devicename"
     update_interval: 10s
 
+
+# Flow meter <-> Wemos D1 mini
+# Red	         +5V (!)
+# Yellow	     D4
+# Black	         GND
+
   - platform: pulse_counter
     name: "Flow door sensor $devicename"
     pin: D2
