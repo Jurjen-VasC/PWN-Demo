@@ -35,10 +35,5 @@
     - debug: msg="Ansible running in {{ansible_lsb.id}}!"
 
   roles:
-#    - test
-#    - common
-#    - network
-#    - hass
-#    - docker
-#    - containers
+    - containers
     - esphome

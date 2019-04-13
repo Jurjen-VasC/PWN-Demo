@@ -1,0 +1,42 @@
+---
+#
+# To run this playbook type the following command from the commandline:
+# ansible-playbook  -u pi playbook.yml 
+
+# (c) Marco Verleun <marco@marcoach.nl>
+# 
+# This playbook is licensed under a GPL license. It is written
+# to provision Raspberry Pi's used with the demo setup from PWN.
+#
+# We only configure localhost with this playbook.
+# It's a bit odd, but it works great...
+- hosts: localhost
+
+  # We need to elevate our priviliges for the tasks we will run
+  become: yes
+  become_user: root
+
+  # Choose the version of python that will be used
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    
+#  vars_files:
+#    # Settings normally done via raspi-config
+#    - vars/raspi-config.yml
+    hass_version: "0.81.6"
+    hass_user: "pi"
+    hass_virtualenv: "/srv/hass"
+
+  # Let's get the ball rolling... 
+
+  tasks:
+    # Not a real task, but if it fails something is wrong with the installation
+    # of ansible
+    - debug: msg="Ansible running in {{ansible_lsb.id}}!"
+
+  roles:
+    - test
+    - common
+    - network
+    - hass
+    - docker
