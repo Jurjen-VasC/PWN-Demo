@@ -20,48 +20,6 @@ If you want to boot from USB follow the steps
 In order to get it to work I needed an USB **3** device. I also had to
 disconnect all other USB devices, such as mouse and keyboard.
 
-### Downloading Raspian
-
-This document assumes that Raspbian Stretch Full version will be used. This version is the biggest one and also contains a GUI and recommend tools.
-
-Download a copy from [RaspberryPi.org](https://www.raspberrypi.org/downloads/raspbian/) and write it to either a USB3 thumb drive or a SD Card.
-
-In order to do so you can follow the official installation procedure described [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
-
-### Network configuration
-
-It is possible to configure the WiFi *before* booting the Raspberry Pi from the newly baked image. This is called a *headless* (No monitor, mouse and keyboard) configuration. The steps are described [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md).
-
-This is an optional step. You can also connect via ethernet or connect to the WiFi manually.
-
-Once you've installed the software boot the Raspberry Pi. Don't be surprised if the Raspberry Pi reboots, this is normal for a first time installation.
-
-When the system is done booting you can login in as the user `pi` with password `raspbian`. 
-
-This is a *very* well known combination of a username and password and should be changed immediatelly.
-
-If not connected to the network (Ethernet or WiFi) you'll have to connect now. The next steps assume that there is connectivity to the internet.
-
-### Installing Ansible
-
-Ansible is one of the tools often used to configure systems. This can be done remotely or locally. 
-Ansible has a configuration language that is used to describe the desired state of items.
-Once Ansible is running it will compare the state of the system with the desired state and resolve any differences that might be present.
-
-It is perfect for our purpose and the so called playbooks used to prepare this system are available through Github which we will use later on.
-
-Right now we need to install Ansible manually...
-
-Open a terminal session and enter the following commands:
-
-```
-sudo apt update
-sudo apt install -y ansible
-```
-
-This will take a couple of minutes
-
-<!--
 ### Install Hassbian
 
 The installation process of installing Hassbian is described
@@ -69,7 +27,6 @@ The installation process of installing Hassbian is described
 Note that you can either write the image to an USB drive or a SD card. It doesn't matter for the functioning of Hassbian.
 
 Once you completed these steps boot the Raspberry Pi with the new OS and wait for it to start. Make sure it is connected to a monitor, keyboard and mouse when you continue.
--->
 
 #### Github
 
