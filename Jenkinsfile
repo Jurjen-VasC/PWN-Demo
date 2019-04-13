@@ -14,7 +14,7 @@ pipeline {
 		platformio platform update
 	'''
         dir(path: 'Firmware') {
-          sh '''for i in {1..6}
+          sh '''for i in $(seq 1 6)
 		do
 			esphome controller_${i}.yaml compile
 			mv controller_${i}/.pioenvs/controller_${i}/firmware.bin ../controller_${i}.bin
