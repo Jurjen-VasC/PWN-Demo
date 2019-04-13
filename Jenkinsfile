@@ -39,7 +39,10 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Starting Deploy'
-        unstash 'Firmwares'
+        dir(path: ' Firmware/builds/latest') {
+          unstash 'Firmwares'
+        }
+
       }
     }
   }
