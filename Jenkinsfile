@@ -1,32 +1,30 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:2.7'
-    }
-
-  }
-  stages {
-    stage('Prepare') {
-      agent any
-      steps {
+  agent any
         sh '''pip install esphome
 exit'''
       }
     }
     stage('Build') {
+      agent {
+        docker {
+          image 'python:2.7'
+        }
+      }
       agent any
       steps {
         echo 'Starting Build'
-        sh 'platformio platform update'
+        sh '''
+	  pip install esphome
+          platformio platform update
+        '''
         dir(path: 'Firmware') {
-          sh '''esphome flowmeter-1.yaml compile
-mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin
+          sh '''
+		esphome flowmeter-1.yaml compile
+		mv controller_2/.pioenvs/controller_2/firmware.bin ../controller_2.bin
 
-
-esphome flowmeter-2.yaml compile
-mv controller_4/.pioenvs/controller_4/firmware.bin ../controller_4.bin
-
-'''
+		esphome flowmeter-2.yaml compile
+		mv controller_4/.pioenvs/controller_4/firmware.bin ../controller_4.bin
+	  '''
         }
 
         sh '''pwd
