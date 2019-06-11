@@ -1,3 +1,7 @@
+#
+# MQTT Config explained here:
+# https://esphome.io/components/mqtt.html
+#
 mqtt:
   broker: '192.168.42.254'
   port: 1883
