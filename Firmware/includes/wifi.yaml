@@ -1,3 +1,10 @@
+#
+# Wifi configuration is explained here:
+# https://esphome.io/components/wifi.html
+#
 wifi:
-  ssid: 'PWN-IoT'
-  password: 'DrinkWater'
+  networks:
+  - ssid: 'PWN-IoT'
+    password: 'DrinkWater'
+  - ssid: 'Other-SSID'
+    password: 'Password'
