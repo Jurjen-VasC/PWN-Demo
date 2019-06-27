@@ -2,6 +2,9 @@ esphome:
   name: $devicename
   platform: ESP8266
   board: d1_mini
+  #
+  # Make sure everything is off by default
+  #
   on_boot:
     priority: 75
     then:

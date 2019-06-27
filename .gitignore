@@ -5,3 +5,4 @@
 Firmware/controller_?/
 Firmware/.clang_complete
 Firmware/.gcc-flags.json
+.Jenkinsfile.swp
