@@ -9,4 +9,6 @@ substitutions:
   max_distance: "55"
   min_distance: "10"
 
+<<: !include includes/wifi.yaml
+<<: !include includes/mqtt.yaml
 <<: !include includes/tank-controller.yaml

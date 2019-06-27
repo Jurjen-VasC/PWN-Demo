@@ -3,4 +3,6 @@ substitutions:
   devicename: "controller_6"
   upper_devicename: "Controller_6"
 
+<<: !include includes/wifi.yaml
+<<: !include includes/mqtt.yaml
 <<: !include includes/flowmeter-controller.yaml

@@ -11,8 +11,8 @@ esphome:
       - switch.turn_off: pomp_switch
       - switch.turn_off: klep_switch
 
-<<: !include wifi.yaml
-<<: !include mqtt.yaml
+#<<: !include wifi.yaml
+#<<: !include mqtt.yaml
 
 # Status LED, the built-in LED is on D4
 status_led:
@@ -53,7 +53,7 @@ sensor:
     unit_of_measurement: "%"
     accuracy_decimals: 0
     filters:
-      - filter_out: nan
+#      - filter_out: nan
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1

@@ -3,8 +3,8 @@ esphome:
   platform: ESP8266
   board: d1_mini
 
-<<: !include wifi.yaml
-<<: !include mqtt.yaml
+#<<: !include wifi.yaml
+#<<: !include mqtt.yaml
 
 # Status LED, the built-in LED is on D4
 status_led:
