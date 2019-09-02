@@ -1,6 +1,5 @@
 # Installing the Demo
 
-
 The Demo solution consists of several components. Each component will be discussed below to maximize the chance of a succesful implementation.
 
 ## WiFi
@@ -54,7 +53,7 @@ Right now we need to install Ansible manually...
 
 Open a terminal session and enter the following commands:
 
-```
+```bash
 sudo apt update
 sudo apt install -y ansible
 ```
@@ -65,7 +64,7 @@ This will take a couple of minutes
 
 The next step is to get some config files from github. Log in as the user 'pi' with password 'raspberry' on the console of the Raspberry pi. The type the following commands:
 
-``` bash
+```bash
 cd
 git clone https://github.com/mverleun/PWN-Demo.git
 ```
@@ -73,6 +72,7 @@ git clone https://github.com/mverleun/PWN-Demo.git
 This will clone the repository to the Raspberry Pi. This repository contains some config files and the firmware that can be used later.
 
 ## Ansible
+
 Ansible is used to automate the provisioning of the Raspberry Pi as much as possible by applying 'playbooks'.
 It is one of the most popular tools to do this.
 
@@ -86,16 +86,17 @@ This playbook will also install some additional software, like esphome and home-
 After completing all the playbooks the Raspberry Pi has a fixed ip address and is ready to be used.
 
 #### Step 1, Updating ansible
+
 When logged in to the Raspberry Pi as user 'pi' open a terminal and type the following commands:
 
-```
+```bash
 cd ~/PWN-Demo
 ansible-playbook -u pi ansible.yml
 ```
 
 This will update ansible to a more recent version. When ansible is updated enter the following commands:
 
-```
+```bash
 cd ~/PWN-Demo
 ansible-playbook -u pi docker.yml && reboot
 ```
@@ -103,36 +104,33 @@ ansible-playbook -u pi docker.yml && reboot
 This will install Docker and reboot the Pi. Without rebooting the next steps will fail!
 
 The final step is to run:
-```
+```bash
 cd ~/PWN-Demo
 ansible-playbook -u pi software.yml
 ```
 
-
-
-
 ### Mosquitto
+
 A very important container that runs is Mosquitto. Mosquitto is the MQTT broker. Almost all communication between the Raspberry Pi and the sensors/actuators are going via this mqtt broker.
 
 When devices need to be configured to use mqtt you will need the following server settings:
 
-```
+```bash
 host: 192.168.42.254
 port: 1883
 ```
 
 ### Node RED
+
 This GUI can be used to create workflows. By default it provides a dashboard for the demo setup, but it can be extend easily.
 
 To configure flows open a web browser and connect to `http://192.168.42.254:1880`. The dashboard is available via `http://192.168.42.254:1880/ui`.
 
-
 ## Controllers
-
 
 The controllers used are all Wemos D1 mini controllers.
 
-![](images/Wemos-D1.jpg)
+![Wemos D1](images/Wemos-D1.jpg)
 
 They are selected because of their built in WiFi and they are easy to connect to a PC using the builtin USB port.
 
@@ -169,10 +167,9 @@ It is important to make sure that each controller has it's own firmware since th
 Whenever you change some settings of the firware you can update it over the air.
 There are some restrictions to this process:
 
--   The controller has to be connected to the same network as the Raspberry Pi.
+- The controller has to be connected to the same network as the Raspberry Pi.
 
--   The name of the controller can't change. This name is retrieved from the
-    yaml files and is used to connect to the right controller.
+- The name of the controller can't change. This name is retrieved from the yaml files and is used to connect to the right controller.
 
 #### Connecting the hardware
 
@@ -180,7 +177,7 @@ There are some restrictions to this process:
 
 The level is measured using a HC-SR04 device.
 
-![](images/HC-SR04.jpg)
+![HC-SR04](images/HC-SR04.jpg)
 
 | HC-SR04 | Wemos D1 mini |
 |---------|---------------|
@@ -193,7 +190,7 @@ The level is measured using a HC-SR04 device.
 
 The pump and valve are controlled using the following relayboard:
 
-![](images/4-channel-relay.jpg)
+![4 Channel Relay](images/4-channel-relay.jpg)
 
 | Relay shield | Wemos D1 mini | Function |
 |--------------|---------------|----------|
@@ -207,7 +204,7 @@ Note that both IN1 and IN2 are connected to D1. This is because we need two rela
 ##### Flow meter
 
 The flow is measured using a YF-S201C device. 
-![](images/YF-S201C.jpg)
+![YF-S201C](images/YF-S201C.jpg)
 
 This is a meter that generates pulses. By counting the pulses we know the
 flow.
@@ -217,5 +214,3 @@ flow.
 | Red        | +5V (!)       |
 | Yellow     | D4            |
 | Black      | GND           |
-
-
